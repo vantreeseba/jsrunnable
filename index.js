@@ -1,4 +1,4 @@
-function foo(){
+function foo(test, bar){
   console.log('from worker');
 }
 

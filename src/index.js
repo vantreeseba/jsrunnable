@@ -5,11 +5,22 @@
  * @param {function} func Function to run on worker
  * @returns {Runnable} A new runnable object wrapping the function.
  */
-function Runnable(func) {
-  this.func;
+function Runnable(funcs) {
+  this._ops = [];
+  this._workers = [];
 
-  if (func && typeof(func) === 'function') {
-    this.func = func;
+  if (funcs) {
+    if (typeof(funcs) === 'function') {
+      this._ops.push(funcs);
+    }
+    if (funcs instanceof Array) {
+      this._ops = this._ops.concat(funcs);
+    }
+  }
+
+  var cores = navigator && navigator.hardwareConcurrency || 2;
+  for (var i = 0; i < cores; i++) {
+    this._workers.push(this._buildWorker());
   }
 }
 
@@ -19,12 +30,29 @@ function Runnable(func) {
  * @access public
  */
 Runnable.prototype.run = function run() {
+  this._workers.forEach(this._postToWorker.bind(this));
+};
 
+/**
+ * _postToWorker
+ *
+ * @access private
+ * @param {WebWorker} worker
+ */
+Runnable.prototype._postToWorker = function _postToWorker(worker){
+  console.log(this);
+  worker.postMessage(this._ops[0].toString());
+}
+
+/**
+ * _buildWorker
+ *
+ * @access private
+ */
+Runnable.prototype._buildWorker = function _buildWorker() {
   var blob = new Blob(['(' + this._workerFunc.toString() + ')()']);
   var uri = URL.createObjectURL(blob, { type: 'text/javascript' });
-  var worker = new Worker(uri);
-
-  worker.postMessage(this.func.toString());
+  return new Worker(uri);
 };
 
 /**
