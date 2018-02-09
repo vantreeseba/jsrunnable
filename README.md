@@ -2,19 +2,6 @@
 
 An easy way to do workers kinda??? I dunno, I just wanted to see if it would work.
 
-### Usage
-
-### API:
-##### new Runnable()
-- Create a new runnnable to spin up workers, and be able to attach functions to them.
-
-##### runnable.add(function)
-* Attach a function to the runnable, it returns a wrapped function, that you can call to run the function on the web worker. This call will return a promise resolved with the result of the function call on the worker.
-* This should be able to handle most function definition types
-* function() {}
-  * () => {}
-  * a => a + 2;
-
 ### Basic Usage: 
 ```javascript
 var runner = new Runnable();
@@ -82,3 +69,10 @@ for(var i = 0; i < 10; i++) {
   returnResult3(i, 0).then(result => console.log(result));
 }
 ```
+
+
+### API:
+##### new Runnable()
+Create a new runnnable to spin up workers, and be able to attach functions to them.
+##### runnable.add([function])
+Attach a function to the runnable, it returns a wrapped function, that you can call to run the function on the web worker. This call will return a promise resolved with the result of the function call on the worker.
