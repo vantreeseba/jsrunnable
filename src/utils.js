@@ -20,12 +20,11 @@ class Utils {
   /**
   * _buildWorker
   */
-  static buildWorker(workerFunc, i) {
+  static buildWorker(workerFunc) {
     var blob = new Blob(['(' + Utils.funcToString(workerFunc) + ')()']);
     var uri = URL.createObjectURL(blob, {type: 'text/javascript'});
     const worker = new Worker(uri);
 
-    worker.postMessage({type: 'init', id: i});
     return worker;
   }
 
@@ -39,6 +38,10 @@ class Utils {
     var funcString = Utils.funcToString(func);
     var args = funcString.substring(funcString.indexOf('(') + 1, funcString.indexOf(')'));
     var body = funcString.substring(funcString.indexOf('{') + 1, funcString.lastIndexOf('}'));
+
+    if(body.length < 1) {
+      body = funcString.substring(funcString.indexOf('=>') + 2);
+    }
 
     return {
       name: name || func.name,
