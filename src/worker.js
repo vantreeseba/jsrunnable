@@ -20,11 +20,27 @@ function worker() {
      * @param {Name of the function called.} name String
      * @param {*} result The result of the function call.
      */
-  function postResult(name, result) {
+  function postResult(message, result) {
     postMessage({
       type: 'result',
-      name,
+      name: message.name,
+      callId: message.callId,
       result
+    });
+  }
+
+  /**
+   * Post an error back to the main thread.
+   *
+   * @param {Object} message the message which called
+   * @param {Object|String} err The error to post to main thread.
+   */
+  function postError(message, err) {
+    postMessage({
+      type: 'error',
+      name: message.name,
+      callId: message.callId,
+      err
     });
   }
 
@@ -41,9 +57,9 @@ function worker() {
       let result;
       try {
         result = funcMap.get(message.name)(...message.args);
-        postResult(message.name, result);
+        postResult(message, result);
       } catch (err) {
-        postMessage({type: 'error', name: message.name, err});
+        postError(message, err);
       }
     }
   };

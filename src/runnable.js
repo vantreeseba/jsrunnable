@@ -19,13 +19,15 @@ class Runnable {
     const onmessage = (ev) => {
       const message = ev.data;
 
-      if(message.type === 'result' && this._resultMap.has(message.name)) {
-        this._resultMap.get(message.name).resolve(message.result);
+      if(message.type === 'result' && this._resultMap.has(message.callId)) {
+        this._resultMap.get(message.callId).resolve(message.result);
       }
 
       if(message.type === 'error' && this._resultMap.has(message.name)) {
         this._resultMap.get(message.name).reject(message.err);
       }
+
+      this._resultMap.delete(message.callId);
     };
 
     const onerror = (err) => {
@@ -66,15 +68,17 @@ class Runnable {
   _call(name, ...args) {
     name = name.name || name;
     const worker = this._workers[this._workerOpMap.get(name)];
+    const callId = 'call_' + (Math.random() * 200000);
 
     worker.postMessage({
       type:'call',
       args: args,
-      name: name
+      name: name,
+      callId,
     });
 
     return new Promise((resolve, reject) => {
-      this._resultMap.set(name, {resolve, reject});
+      this._resultMap.set(callId, {resolve, reject});
     });
   }
 
