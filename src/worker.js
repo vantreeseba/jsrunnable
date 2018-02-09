@@ -5,21 +5,11 @@ function worker() {
   const funcMap = new Map();
 
   /**
-   * getFunction
+   * Posts the result of a called worker function back to the main thread.
    *
-   * @param {string} funcString Stringified function for worker to execute.
-   * @returns {function} eval'd function
+   * @param {Name of the function called.} name String
+   * @param {*} result The result of the function call.
    */
-  const getFunction = (funcObj) => {
-    return new Function(funcObj.args.split(','), funcObj.body);
-  }
-
-  /**
-     * Posts the result of a called worker function back to the main thread.
-     *
-     * @param {Name of the function called.} name String
-     * @param {*} result The result of the function call.
-     */
   const postResult = (message, result) => {
     postMessage({
       type: 'result',
@@ -49,7 +39,8 @@ function worker() {
    * @param {Object} message Message object from main thread.
    */
   const compile = (message) => {
-    funcMap.set(message.func.name, getFunction(message.func));
+    const compiled = new Function(message.func.args.split(','), message.func.body);
+    funcMap.set(message.func.name, compiled);
   };
 
   /**
@@ -57,10 +48,8 @@ function worker() {
    * @param {Object} message Message object from main thread.
    */
   const call = (message) => {
-    let result;
     try {
-      result = funcMap.get(message.name)(...message.args);
-      postResult(message, result);
+      postResult(message, funcMap.get(message.name)(...message.args));
     } catch (err) {
       postError(message, err);
     }
