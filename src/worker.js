@@ -21,7 +21,8 @@ function worker() {
      * @param {*} result The result of the function call.
      */
   function postResult(name, result) {
-    self.postMessage({
+    postMessage({
+      type: 'result',
       name,
       result
     });
@@ -37,7 +38,13 @@ function worker() {
     }
 
     if(message.type === 'call') {
-      postResult(message.name, funcMap.get(message.name)(...message.args));
+      let result;
+      try {
+        result = funcMap.get(message.name)(...message.args);
+        postResult(message.name, result);
+      } catch (err) {
+        postMessage({type: 'error', name: message.name, err});
+      }
     }
   };
 }

@@ -15,9 +15,13 @@ const returnResult = runner.add(() => {
   return 2 + 2;
 });
 
+const returnResult2 = runner.add(() => {
+  return 2 + 5;
+});
+
 basic();
 withArgs(1, 2, 3);
-var result = returnResult();
+returnResult().then(result => console.log(result));
+returnResult2().then(result => console.log(result));
 
-console.log(result);
 

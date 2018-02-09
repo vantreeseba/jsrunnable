@@ -13,11 +13,35 @@ class Runnable {
     this._ops = new Map();
     this._workers = [];
     this._workerOpMap = new Map();
+    this._resultMap = new Map();
     this._lastWorkerIndex = 0;
 
-    this.cores = navigator && navigator.hardwareConcurrency || 1;
+    const onmessage = (ev) => {
+      const message = ev.data;
+
+      if(message.type === 'result' && this._resultMap.has(message.name)) {
+        this._resultMap.get(message.name).resolve(message.result);
+      }
+
+      if(message.type === 'error' && this._resultMap.has(message.name)) {
+        this._resultMap.get(message.name).reject(message.err);
+      }
+    };
+
+    const onerror = (err) => {
+      const message = ev.data;
+      if(this._resultMap.has(message.name)) {
+        this._resultMap.get(message.name).reject(err);
+      }
+    };
+
+
+    this.cores = 1; // navigator && navigator.hardwareConcurrency || 1;
     for (var i = 0; i < this.cores; i++) {
       const worker = Utils.buildWorker(Worker);
+      worker.onmessage = onmessage;
+      worker.onerror = onerror;
+
       this._workers.push(worker);
     }
   }
@@ -32,7 +56,7 @@ class Runnable {
     this._compile(name, func);
 
     return (...args) => {
-      this._call(name, ...args);
+      return this._call(name, ...args);
     };
   }
 
@@ -47,6 +71,10 @@ class Runnable {
       type:'call',
       args: args,
       name: name
+    });
+
+    return new Promise((resolve, reject) => {
+      this._resultMap.set(name, {resolve, reject});
     });
   }
 
