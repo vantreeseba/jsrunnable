@@ -1,0 +1,23 @@
+{
+  "name": "jsrunnable",
+  "version": "0.0.1",
+  "description": "A wrapper to make web workers easier to use like RPC and etc.",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vantreeseba/jsrunnable.git"
+  },
+  "author": "vantreeseba@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vantreeseba/jsrunnable/issues"
+  },
+  "homepage": "https://github.com/vantreeseba/jsrunnable#readme",
+  "dependencies": {
+    "webpack": "^3.10.0"
+  }
+}
