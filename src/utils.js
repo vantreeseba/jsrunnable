@@ -54,6 +54,17 @@ class Utils {
       body: body,
     };
   }
+
+  /**
+   * Returns a random id.
+   *
+   * @static
+   * @param {String} prefix A string to prefix the id with.
+   * @return {String} A string id.
+   */
+  static randomId(prefix = '') {
+    return prefix + '_' + Math.floor(Math.random() * Date.now());
+  }
 }
 
 module.exports = Utils;

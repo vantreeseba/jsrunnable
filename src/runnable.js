@@ -52,7 +52,7 @@ class Runnable {
    * @param {Function} func Function to assign to workers.
    */
   add(func, workerNum = 1) {
-    const name = func.name || 'id_' + Math.floor(Math.random() * 200000);
+    const name = func.name || Utils.randomId('id');
     this._compile(name, func, workerNum);
 
     return (...args) => {
@@ -66,7 +66,7 @@ class Runnable {
   _call(name, ...args) {
     name = name.name || name;
     const worker = this._workers[this._getAndMoveIndexInOpMap(name)];
-    const callId = 'call_' + (Math.random() * 200000);
+    const callId = Utils.randomId('call');
 
     worker.postMessage({
       type:'call',
