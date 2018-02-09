@@ -60,7 +60,7 @@ function worker() {
 
     message.type === 'compile' ? compile(message)
       : message.type === 'call' ? call(message)
-        : 0; // Why can't I do a return here?
+      : 0;
   };
 }
 
