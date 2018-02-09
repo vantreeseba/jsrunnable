@@ -36,7 +36,7 @@ class Runnable {
     };
 
 
-    this.cores = 1; // navigator && navigator.hardwareConcurrency || 1;
+    this.cores = navigator && navigator.hardwareConcurrency || 1;
     for (var i = 0; i < this.cores; i++) {
       const worker = Utils.buildWorker(Worker);
       worker.onmessage = onmessage;

@@ -7,35 +7,29 @@ This code is in the [docs](https://vantreeseba.github.io/jsrunnable/) example as
 
 ```
 
-function foo(){
-  console.log('from worker');
-}
+var x = 4; // To show context cannot pass.
 
-function foo2(a, b, c) {
-  console.log('look ma args!', a, b + c);
-}
+var runner = new Runnable();
 
-var x = 4;
+// Simple basic function
+const basic = runner.add(() => console.log('hello worker!'));
 
-function foo3() {
-  console.log('I explode.', x);
-}
+// Function with args
+const withArgs = runner.add((a, b, c) => console.log(a, b, c));
 
+// Function trying to capture context.
+// const context = runner.add(() => console.log('I explode!', x));
 
-var thread = new Runnable();
-thread.add(foo);
-thread.add(foo2);
-thread.add(foo3);
-const thing = thread.add(() => {
-  console.log('soup');
+const returnResult = runner.add(() => {
+  return 2 + 2;
 });
 
-thread.call(foo);
-thread.call(foo2, 1, 2, 3);
-thread.call(foo3);
-thread.call(thing);
+const returnResult2 = runner.add(() => {
+  return 2 + 5;
+});
 
-console.log(thread._workerOpMap);
-
-console.log('yo');
+basic();
+withArgs(1, 2, 3);
+returnResult().then(result => console.log(result));
+returnResult2().then(result => console.log(result));
 ```
