@@ -7,7 +7,7 @@ function worker() {
   /**
    * Posts the result of a called worker function back to the main thread.
    *
-   * @param {Name of the function called.} name String
+   * @param {Object} message Message object for function called. 
    * @param {*} result The result of the function call.
    */
   const postResult = (message, result) => {
