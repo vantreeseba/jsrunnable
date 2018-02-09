@@ -51,9 +51,9 @@ class Runnable {
    * Add functions to workers to call.
    * @param {Function} func Function to assign to workers.
    */
-  add(func) {
+  add(func, workerNum = 1) {
     const name = func.name || 'id_' + Math.floor(Math.random() * 200000);
-    this._compile(name, func);
+    this._compile(name, func, workerNum);
 
     return (...args) => {
       return this._call(name, ...args);
@@ -65,7 +65,7 @@ class Runnable {
    */
   _call(name, ...args) {
     name = name.name || name;
-    const worker = this._workers[this._workerOpMap.get(name)];
+    const worker = this._workers[this._getAndMoveIndexInOpMap(name)];
     const callId = 'call_' + (Math.random() * 200000);
 
     worker.postMessage({
@@ -81,6 +81,19 @@ class Runnable {
   }
 
   /**
+   *  Get's the next worker to call in a round robin fashion. 
+   *
+   * @param {String} name Name of the function to get worker map for.
+   * @return {Number} The worker id to call.
+   */
+  _getAndMoveIndexInOpMap(name) {
+    const opMap = this._workerOpMap.get(name);
+    const workerId = opMap.pop();
+    opMap.unshift(workerId);
+    return workerId;
+  }
+
+  /**
    * Internal Compile Function
    */
   _compile(name, op, workerNum = 1) {
@@ -93,13 +106,16 @@ class Runnable {
       func: Utils.functionToMessage(op, name),
     };
 
+    const opMap = this._workerOpMap.get(name) || [];
+
     for(var i = 0; i < workerNum; i ++) {
       const index = this._lastWorkerIndex % this.cores;
       this._workers[index].postMessage(message);
-      this._workerOpMap.set(name, index);
-
+      opMap.push(index);
       this._lastWorkerIndex++;
     }
+
+    this._workerOpMap.set(name, opMap);
   }
 }
 
