@@ -21,7 +21,7 @@ const returnResult2 = runner.add(() => {
 
 const returnResult3 = runner.add((a, b) => {
   return a + b;
-}, 4);
+}, 32);
 
 basic();
 noParenWithArg(1);

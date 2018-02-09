@@ -111,7 +111,9 @@ class Runnable {
     for(var i = 0; i < workerNum; i ++) {
       const index = this._lastWorkerIndex % this.cores;
       this._workers[index].postMessage(message);
-      opMap.push(index);
+      if(opMap.indexOf(index) === -1) {
+        opMap.push(index);
+      }
       this._lastWorkerIndex++;
     }
 
