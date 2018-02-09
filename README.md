@@ -23,10 +23,11 @@ const myWorkerFunction = runner.add((a,b,c,d) => { return a + b + c + d; });
 myWorkerFunction(1,2,3,4).then(result => console.log(result));
 ```
 
-### It tracks internal calls to return the correct results to the correct promise:
+### It can run on multiple workers:
 ```javascript
 var runner = new Runnable();
-const myWorkerFunction = runner.add((a,b,c,d) => { return a + b + c + d; });
+var workerCount = 4;
+const myWorkerFunction = runner.add((a,b,c,d) => { return a + b + c + d; }, workerCount);
 myWorkerFunction(1,2,3,4).then(result => console.log(result));
 myWorkerFunction(4,4,4,4).then(result => console.log(result));
 ```
