@@ -101,6 +101,8 @@ class Runnable {
       return;
     }
 
+    workerNum = workerNum >= 1 ? workerNum : 1;
+
     const message = {
       type: 'compile',
       func: Utils.functionToMessage(op, name),

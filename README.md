@@ -34,5 +34,8 @@ myWorkerFunction(4,4,4,4).then(result => console.log(result));
 ### API:
 ##### new Runnable()
 Create a new runnable to spin up workers, and be able to attach functions to them.
-##### runnable.add([function])
-Attach a function to the runnable, it returns a wrapped function, that you can call to run the function on the web worker. This call will return a promise resolved with the result of the function call on the worker.
+##### runnable.add([function], workerCount[number])
+Attach a function to the runnable;
+It returns a wrapped function, that you can call to run the function on the web worker. 
+This call will return a promise resolved with the result of the function call on the worker.
+The worker count can be anything, but will limit internally to the number of available threads.
