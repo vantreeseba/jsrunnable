@@ -6,7 +6,7 @@ var runner = new Runnable();
 const basic = runner.add(() => console.log('hello worker!'));
 
 // Function with args
-const withArgs = runner.add((a, b, c) => console.log(a, b, c));
+const withArgs = runner.add(a => console.log('soup', a));
 
 // Function trying to capture context.
 // const context = runner.add(() => console.log('I explode!', x));

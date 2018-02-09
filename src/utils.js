@@ -10,8 +10,13 @@ class Utils {
    */
   static funcToString(func) {
     let stringFunc = func.toString();
+    let noArgParens = stringFunc.indexOf('(') > stringFunc.indexOf('=>');
     if(!stringFunc.startsWith('function')){
-      stringFunc = 'function ' + stringFunc;
+      if(noArgParens) {
+        stringFunc = 'function (' + stringFunc.substring(0, stringFunc.indexOf('=>')) + ')' + stringFunc;
+      } else {
+        stringFunc = 'function ' + stringFunc;
+      }
     }
 
     return stringFunc;
