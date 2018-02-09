@@ -10,7 +10,6 @@ class Runnable {
    * @return {Runnable}
    */
   constructor() {
-    this._ops = new Map();
     this._workers = [];
     this._workerOpMap = new Map();
     this._resultMap = new Map();
@@ -54,7 +53,6 @@ class Runnable {
    */
   add(func) {
     const name = func.name || 'id_' + Math.floor(Math.random() * 200000);
-    this._ops.set(name, func);
     this._compile(name, func);
 
     return (...args) => {
@@ -85,7 +83,7 @@ class Runnable {
   /**
    * Internal Compile Function
    */
-  _compile(name, op) {
+  _compile(name, op, workerNum = 1) {
     if(this._workerOpMap.has(name)) {
       return;
     }
@@ -95,11 +93,13 @@ class Runnable {
       func: Utils.functionToMessage(op, name),
     };
 
-    const index = this._lastWorkerIndex % this.cores;
-    this._workers[index].postMessage(message);
-    this._workerOpMap.set(name, index);
+    for(var i = 0; i < workerNum; i ++) {
+      const index = this._lastWorkerIndex % this.cores;
+      this._workers[index].postMessage(message);
+      this._workerOpMap.set(name, index);
 
-    this._lastWorkerIndex++;
+      this._lastWorkerIndex++;
+    }
   }
 }
 

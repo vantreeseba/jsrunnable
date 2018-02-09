@@ -2,16 +2,16 @@
   * worker
   */
 function worker() {
+  const funcMap = new Map();
+
   /**
    * getFunction
    *
    * @param {string} funcString Stringified function for worker to execute.
    * @returns {function} eval'd function
    */
-  function getFunction(funcObj) {
-    let foo = new Function(funcObj.args.split(','), funcObj.body);
-
-    return foo;
+  const getFunction = (funcObj) => {
+    return new Function(funcObj.args.split(','), funcObj.body);
   }
 
   /**
@@ -20,14 +20,14 @@ function worker() {
      * @param {Name of the function called.} name String
      * @param {*} result The result of the function call.
      */
-  function postResult(message, result) {
+  const postResult = (message, result) => {
     postMessage({
       type: 'result',
       name: message.name,
       callId: message.callId,
       result
     });
-  }
+  };
 
   /**
    * Post an error back to the main thread.
@@ -35,33 +35,43 @@ function worker() {
    * @param {Object} message the message which called
    * @param {Object|String} err The error to post to main thread.
    */
-  function postError(message, err) {
+  const postError = (message, err) => {
     postMessage({
       type: 'error',
       name: message.name,
       callId: message.callId,
       err
     });
-  }
+  };
 
-  const funcMap = new Map();
+  /**
+   * Create the function from the message object
+   * @param {Object} message Message object from main thread.
+   */
+  const compile = (message) => {
+    funcMap.set(message.func.name, getFunction(message.func));
+  };
 
-  this.onmessage = function onmessage(ev) {
+  /**
+   * Call the function from the message object.
+   * @param {Object} message Message object from main thread.
+   */
+  const call = (message) => {
+    let result;
+    try {
+      result = funcMap.get(message.name)(...message.args);
+      postResult(message, result);
+    } catch (err) {
+      postError(message, err);
+    }
+  };
+
+  onmessage = (ev) => {
     const message = ev.data;
 
-    if(message.type === 'compile') {
-      funcMap.set(message.func.name, getFunction(message.func));
-    }
-
-    if(message.type === 'call') {
-      let result;
-      try {
-        result = funcMap.get(message.name)(...message.args);
-        postResult(message, result);
-      } catch (err) {
-        postError(message, err);
-      }
-    }
+    message.type === 'compile' ? compile(message)
+      : message.type === 'call' ? call(message)
+        : 0; // Why can't I do a return here?
   };
 }
 
