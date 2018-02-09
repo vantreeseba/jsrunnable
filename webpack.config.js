@@ -8,7 +8,7 @@ const config = {
     hints: false,
   },
   entry: {
-    app: [
+    jsrunnable: [
       './src/index.js',
     ],
   },
