@@ -35,13 +35,13 @@ class Utils {
    * @param {function} func
    * @return {Object} Function message object.
    */
-  static functionToMessage(func) {
+  static functionToMessage(func, name) {
     var funcString = Utils.funcToString(func);
     var args = funcString.substring(funcString.indexOf('(') + 1, funcString.indexOf(')'));
     var body = funcString.substring(funcString.indexOf('{') + 1, funcString.lastIndexOf('}'));
 
     return {
-      name: func.name,
+      name: name || func.name,
       args: args,
       body: body,
     };

@@ -8,49 +8,56 @@ class Runnable {
    * @param {Array} funcs array of functions to run in workers
    * @return {Runnable}
    */
-  constructor(funcs) {
+  constructor() {
     this._ops = new Map();
     this._workers = [];
     this._workerOpMap = new Map();
+    this._lastWorkerIndex = 0;
 
     this.cores = navigator && navigator.hardwareConcurrency || 1;
     for (var i = 0; i < this.cores; i++) {
       this._workers.push(Utils.buildWorker(this._workerFunc, i));
     }
-
-    this.add(funcs);
   }
 
   /**
    * Add functions to workers to call.
-   * @param {Array|Function} funcs Function(s) to assign to workers.
+   * @param {Function} func Function to assign to workers.
    */
-  add(funcs) {
-    if (funcs) {
-      if (typeof(funcs) === 'function') {
-        this._ops.set(funcs.name, funcs);
-      }
-      if (funcs instanceof Array) {
-        funcs.forEach(f => this._ops.set(f.name, f));
-      }
-    }
+  add(func) {
+    const name = func.name || 'id_' + Math.floor(Math.random() * 200000);
+    this._ops.set(name, func);
+    this._compile(name, func);
+    return name;
   }
 
   /**
    * Build the workers.
    */
   compile() {
-    Array.from(this._ops.values()).forEach((op, i) => {
-      const index = i % this.cores;
-
-      const message = {
-        type: 'compile',
-        func: Utils.functionToMessage(op),
-      };
-
-      this._workers[index].postMessage(message);
-      this._workerOpMap.set(op.name, index);
+    this._ops.forEach((op, name) => {
+      this._compile(name, op);
     });
+  }
+
+  /**
+   * Internal Compile Function
+   */
+  _compile(name, op) {
+    if(this._workerOpMap.has(name)) {
+      return;
+    }
+
+    const message = {
+      type: 'compile',
+      func: Utils.functionToMessage(op, name),
+    };
+
+    const index = this._lastWorkerIndex % this.cores;
+    this._workers[index].postMessage(message);
+    this._workerOpMap.set(name, index);
+
+    this._lastWorkerIndex++;
   }
 
   /**
@@ -58,7 +65,7 @@ class Runnable {
   *
   * @access public
   */
-  call(name, args) {
+  call(name, ...args) {
     name = name.name || name;
     const worker = this._workers[this._workerOpMap.get(name)];
 
@@ -104,7 +111,7 @@ class Runnable {
       }
 
       if(message.type === 'call') {
-        funcMap.get(message.name)(message.args);
+        funcMap.get(message.name)(...message.args);
       }
     };
   }

@@ -1,3 +1,12 @@
+# JS Runnable
+
+An easy way to do workers kinda??? I dunno, I just wanted to see if it would work.
+
+### Example
+This code is in the docs example as well.
+
+```
+
 function foo(){
   console.log('from worker');
 }
@@ -21,3 +30,4 @@ thread.call(thing);
 console.log(thread._workerOpMap);
 
 console.log('yo');
+```
