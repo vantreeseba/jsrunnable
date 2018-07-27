@@ -1,5 +1,12 @@
+## <small>0.2.2 (2018-07-27)</small>
+
+* Fix npmignore ([2df65dc](https://github.com/vantreeseba/jsrunnable/commit/2df65dc))
+
+
+
 ## <small>0.2.1 (2018-07-27)</small>
 
+* 0.2.1 ([b245096](https://github.com/vantreeseba/jsrunnable/commit/b245096))
 * Add npm ignore ([947703e](https://github.com/vantreeseba/jsrunnable/commit/947703e))
 * Fix readme ([4dff089](https://github.com/vantreeseba/jsrunnable/commit/4dff089))
 
