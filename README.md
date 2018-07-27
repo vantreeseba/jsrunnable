@@ -68,25 +68,21 @@ Runnable
 **Kind**: global class  
 
 * [Runnable](#Runnable)
-    * [new Runnable(funcs)](#new_Runnable_new)
-    * [.add(func)](#Runnable+add)
+    * [new Runnable()](#new_Runnable_new)
+    * [.add(func)](#Runnable+add) ⇒ <code>function</code>
 
 <a name="new_Runnable_new"></a>
 
-### new Runnable(funcs)
+### new Runnable()
 Constructor
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| funcs | <code>Array</code> | array of functions to run in workers |
 
 <a name="Runnable+add"></a>
 
-### runnable.add(func)
+### runnable.add(func) ⇒ <code>function</code>
 Add functions to workers to call.
 
 **Kind**: instance method of [<code>Runnable</code>](#Runnable)  
+**Returns**: <code>function</code> - A wrapped function that calls the worker and returns results in a promise.  
 
 | Param | Type | Description |
 | --- | --- | --- |

@@ -6,7 +6,6 @@ const Worker = require('./worker');
 class Runnable {
   /**
    * Constructor
-   * @param {Array} funcs array of functions to run in workers
    * @return {Runnable}
    */
   constructor() {
@@ -50,6 +49,7 @@ class Runnable {
   /**
    * Add functions to workers to call.
    * @param {Function} func Function to assign to workers.
+   * @return {Function} A wrapped function that calls the worker and returns results in a promise.
    */
   add(func, workerNum = 1) {
     const name = func.name || Utils.randomId('id');
