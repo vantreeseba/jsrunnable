@@ -8,8 +8,8 @@ const config = {
     hints: false,
   },
   entry: {
-    jsrunnable: [
-      './src/index.js',
+    index: [
+      './index.js',
     ],
   },
   module: {},

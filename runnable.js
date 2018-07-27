@@ -62,6 +62,7 @@ class Runnable {
 
   /**
    * Call the remote function.
+   * @private
    */
   _call(name, ...args) {
     name = name.name || name;
@@ -81,8 +82,8 @@ class Runnable {
   }
 
   /**
-   *  Get's the next worker to call in a round robin fashion. 
-   *
+   * Get's the next worker to call in a round robin fashion.
+   * @private
    * @param {String} name Name of the function to get worker map for.
    * @return {Number} The worker id to call.
    */
@@ -95,6 +96,7 @@ class Runnable {
 
   /**
    * Internal Compile Function
+   * @private
    */
   _compile(name, op, workerNum = 1) {
     if(this._workerOpMap.has(name)) {

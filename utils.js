@@ -5,25 +5,31 @@ class Utils {
   /**
    * Stringifies a function
    *
+   * @static
    * @param {function} func Function to stringify.
    * @return {string} Stringified function.
    */
   static funcToString(func) {
     let stringFunc = func.toString();
-    let noArgParens = stringFunc.indexOf('(') > stringFunc.indexOf('=>');
+    const arrowIndex = stringFunc.indexOf('=>');
+    const noArgParens = stringFunc.indexOf('(') > arrowIndex || stringFunc.indexOf('(') === -1;
     if(!stringFunc.startsWith('function')){
       if(noArgParens) {
-        stringFunc = 'function (' + stringFunc.substring(0, stringFunc.indexOf('=>')) + ')' + stringFunc;
+        stringFunc = 'function (' + stringFunc.substring(0, arrowIndex).trim() + ')' + stringFunc.substring(arrowIndex + 2, stringFunc.length).trim();
       } else {
-        stringFunc = 'function ' + stringFunc;
+        stringFunc = 'function ' + stringFunc.substring(0, arrowIndex).trim() + stringFunc.substring(arrowIndex + 2, stringFunc.length).trim();
       }
     }
 
-    return stringFunc;
+    return stringFunc.trim();
   }
 
   /**
-  * _buildWorker
+  * Build a worker containing the given function.
+  *
+  * @static
+  * @param {Function} workerFunc The function to build a worker for.
+  * @return {Worker} worker The worker.
   */
   static buildWorker(workerFunc) {
     var blob = new Blob(['(' + Utils.funcToString(workerFunc) + ')()']);
@@ -36,6 +42,7 @@ class Utils {
   /**
    * Turn a function into an object for sending to a worker.
    *
+   * @static
    * @param {function} func
    * @return {Object} Function message object.
    */
