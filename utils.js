@@ -15,9 +15,9 @@ class Utils {
     const noArgParens = stringFunc.indexOf('(') > arrowIndex || stringFunc.indexOf('(') === -1;
     if(!stringFunc.startsWith('function')){
       if(noArgParens) {
-        stringFunc = 'function (' + stringFunc.substring(0, arrowIndex).trim() + ')' + stringFunc.substring(arrowIndex + 2, stringFunc.length).trim();
-      } else {
-        stringFunc = 'function ' + stringFunc.substring(0, arrowIndex).trim() + stringFunc.substring(arrowIndex + 2, stringFunc.length).trim();
+        let args = stringFunc.substring(0, arrowIndex).trim();
+        let body = stringFunc.substring(arrowIndex, stringFunc.length);
+        stringFunc = '(' + args + ') ' + body;
       }
     }
 
@@ -32,9 +32,19 @@ class Utils {
   * @return {Worker} worker The worker.
   */
   static buildWorker(workerFunc) {
-    var blob = new Blob(['(' + Utils.funcToString(workerFunc) + ')()']);
-    var uri = URL.createObjectURL(blob, {type: 'text/javascript'});
-    const worker = new Worker(uri);
+    const funcString = Utils.funcToString(workerFunc);
+    const funcWrapped = '(' + funcString + ')()';
+    let worker;
+    if(this.window) {
+      var blob = new Blob([funcWrapped]);
+      var uri = URL.createObjectURL(blob, {type: 'text/javascript'});
+      worker = new Worker(uri);
+    } else {
+      if(!Worker) {
+        throw 'You need node 10.x to use workers';
+      }
+      worker = new Worker(funcWrapped, {eval: true});
+    }
 
     return worker;
   }
@@ -50,10 +60,6 @@ class Utils {
     var funcString = Utils.funcToString(func);
     var args = funcString.substring(funcString.indexOf('(') + 1, funcString.indexOf(')'));
     var body = funcString.substring(funcString.indexOf('{') + 1, funcString.lastIndexOf('}'));
-
-    if(body.length < 1) {
-      body = funcString.substring(funcString.indexOf('=>') + 2);
-    }
 
     return {
       name: name || func.name,

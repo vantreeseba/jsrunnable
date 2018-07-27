@@ -16,6 +16,7 @@
   },
   "nyc": {
     "exclude": [
+      "dist",
       "docs",
       "test",
       "webpack.config.js"
