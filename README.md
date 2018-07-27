@@ -101,7 +101,7 @@ Utilities for jsrunnable
 
 * [Utils](#Utils)
     * [.funcToString(func)](#Utils.funcToString) ⇒ <code>string</code>
-    * [.buildWorker()](#Utils.buildWorker)
+    * [.buildWorker(workerFunc)](#Utils.buildWorker) ⇒ <code>Worker</code>
     * [.functionToMessage(func)](#Utils.functionToMessage) ⇒ <code>Object</code>
     * [.randomId(prefix)](#Utils.randomId) ⇒ <code>String</code>
 
@@ -119,10 +119,16 @@ Stringifies a function
 
 <a name="Utils.buildWorker"></a>
 
-### Utils.buildWorker()
-_buildWorker
+### Utils.buildWorker(workerFunc) ⇒ <code>Worker</code>
+Build a worker containing the given function.
 
 **Kind**: static method of [<code>Utils</code>](#Utils)  
+**Returns**: <code>Worker</code> - worker The worker.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| workerFunc | <code>function</code> | The function to build a worker for. |
+
 <a name="Utils.functionToMessage"></a>
 
 ### Utils.functionToMessage(func) ⇒ <code>Object</code>
