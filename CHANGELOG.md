@@ -1,5 +1,11 @@
+## 0.2.0 (2018-07-27)
+
+
+
+
 ## 0.1.0 (2018-07-27)
 
+* 0.1.0 ([9fe6bbf](https://github.com/vantreeseba/jsrunnable/commit/9fe6bbf))
 * Add another example ([c34e95e](https://github.com/vantreeseba/jsrunnable/commit/c34e95e))
 * Add better error handling ([7aaf973](https://github.com/vantreeseba/jsrunnable/commit/7aaf973))
 * Add callids, so that multiple calls to a single function resolve different promises ([46ad82a](https://github.com/vantreeseba/jsrunnable/commit/46ad82a))
@@ -13,9 +19,9 @@
 * Adding example, change webpack to devdep ([eecd281](https://github.com/vantreeseba/jsrunnable/commit/eecd281))
 * bump npm version ([4ea8d66](https://github.com/vantreeseba/jsrunnable/commit/4ea8d66))
 * bump npm version ([daf124e](https://github.com/vantreeseba/jsrunnable/commit/daf124e))
-* Bump npm version ([5089405](https://github.com/vantreeseba/jsrunnable/commit/5089405))
 * Bump npm version ([2a41067](https://github.com/vantreeseba/jsrunnable/commit/2a41067))
 * Bump npm version ([f1aab15](https://github.com/vantreeseba/jsrunnable/commit/f1aab15))
+* Bump npm version ([5089405](https://github.com/vantreeseba/jsrunnable/commit/5089405))
 * Cleanup ([6a855e5](https://github.com/vantreeseba/jsrunnable/commit/6a855e5))
 * Extract more code to allow calling multiple workers ([92505f1](https://github.com/vantreeseba/jsrunnable/commit/92505f1))
 * Fix issue with arrow funcs with no parens ([f31fd85](https://github.com/vantreeseba/jsrunnable/commit/f31fd85))
@@ -28,13 +34,14 @@
 * remove core limit in runnable ([1c9ee9a](https://github.com/vantreeseba/jsrunnable/commit/1c9ee9a))
 * Start work on creating copies of func across workers ([2abe701](https://github.com/vantreeseba/jsrunnable/commit/2abe701))
 * Update readme, add calling with args, add correct arg parsing ([f0dd519](https://github.com/vantreeseba/jsrunnable/commit/f0dd519))
-* Update README.md ([5db4243](https://github.com/vantreeseba/jsrunnable/commit/5db4243))
-* Update README.md ([6a42a1f](https://github.com/vantreeseba/jsrunnable/commit/6a42a1f))
-* Update README.md ([407c305](https://github.com/vantreeseba/jsrunnable/commit/407c305))
 * Update README.md ([6d41102](https://github.com/vantreeseba/jsrunnable/commit/6d41102))
-* Update README.md ([91921ff](https://github.com/vantreeseba/jsrunnable/commit/91921ff))
-* Update README.md ([34af71c](https://github.com/vantreeseba/jsrunnable/commit/34af71c))
+* Update README.md ([6a42a1f](https://github.com/vantreeseba/jsrunnable/commit/6a42a1f))
 * Update README.md ([fe3ca68](https://github.com/vantreeseba/jsrunnable/commit/fe3ca68))
+* Update README.md ([407c305](https://github.com/vantreeseba/jsrunnable/commit/407c305))
+* Update README.md ([91921ff](https://github.com/vantreeseba/jsrunnable/commit/91921ff))
+* Update README.md ([5db4243](https://github.com/vantreeseba/jsrunnable/commit/5db4243))
+* Update README.md ([584642e](https://github.com/vantreeseba/jsrunnable/commit/584642e))
+* Update README.md ([34af71c](https://github.com/vantreeseba/jsrunnable/commit/34af71c))
 * version bump (0.0.7) ([64cb732](https://github.com/vantreeseba/jsrunnable/commit/64cb732))
 * Version bump (0.0.8) ([d5c0aee](https://github.com/vantreeseba/jsrunnable/commit/d5c0aee))
 * Working on webpack build, mapping for funcs to workers, allow RPC like calling ([ed893f3](https://github.com/vantreeseba/jsrunnable/commit/ed893f3))

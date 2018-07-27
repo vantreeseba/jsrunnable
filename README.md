@@ -2,8 +2,6 @@
 
 An easy way to do workers kinda??? I dunno, I just wanted to see if it would work.
 
-This will only work in the browser currently, looking into ways to use the cluster module to make it transparently work on both the browser and in node.
-
 ### Basic Usage: 
 ```javascript
 var runner = new Runnable();
