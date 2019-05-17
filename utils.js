@@ -35,7 +35,7 @@ class Utils {
     const funcString = Utils.funcToString(workerFunc);
     const funcWrapped = '(' + funcString + ')()';
     let worker;
-    if(this.window) {
+    if(window) {
       var blob = new Blob([funcWrapped]);
       var uri = URL.createObjectURL(blob, {type: 'text/javascript'});
       worker = new Worker(uri);

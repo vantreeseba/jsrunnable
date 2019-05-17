@@ -26,13 +26,13 @@ const tests = {
       const test = function() {};
 
       const string = Utils.funcToString(test);
-      assert.equal(string, 'function () {}');
+      assert.equal(string, 'function() {}');
     },
     'should turn an anonymous function with args into a string': () => {
       const test = function(arg) {};
 
       const string = Utils.funcToString(test);
-      assert.equal(string, 'function (arg) {}');
+      assert.equal(string, 'function(arg) {}');
     },
     'should turn an arrow function into a string': () => {
       const test = () => {};
@@ -60,10 +60,10 @@ const tests = {
     }
   },
   buildWorker: {
-    // 'should return a worker': () => {
-    //   const worker = Utils.buildWorker(() => {});
-    //   assert.isOK(worker);
-    // }
+    'should return a worker': () => {
+      const worker = Utils.buildWorker(() => {});
+      assert.isOK(worker);
+    }
   }
 };
 

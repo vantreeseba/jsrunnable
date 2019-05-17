@@ -47,9 +47,10 @@ function worker() {
    * Call the function from the message object.
    * @param {Object} message Message object from main thread.
    */
-  const call = (message) => {
+  const call = async (message) => {
     try {
-      postResult(message, funcMap.get(message.name)(...message.args));
+      const result = await funcMap.get(message.name)(...message.args);
+      postResult(message, result);
     } catch (err) {
       postError(message, err);
     }
