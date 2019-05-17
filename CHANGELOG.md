@@ -1,5 +1,11 @@
+## 0.3.0 (2019-05-17)
+
+
+
+
 ## <small>0.2.4 (2019-05-17)</small>
 
+* 0.2.4 ([0cb43cb](https://github.com/vantreeseba/jsrunnable/commit/0cb43cb))
 
 
 
