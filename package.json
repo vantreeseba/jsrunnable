@@ -1,6 +1,6 @@
 {
   "name": "jsrunnable",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "A wrapper to make web workers easier to use like RPC and etc.",
   "main": "index.js",
   "browser": "dist/index.js",

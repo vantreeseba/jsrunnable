@@ -1,7 +1,15 @@
+## <small>0.2.4 (2019-05-17)</small>
+
+
+
+
 ## <small>0.2.3 (2019-05-17)</small>
 
+* 0.2.3 ([acaa591](https://github.com/vantreeseba/jsrunnable/commit/acaa591))
 * Add new promise based tests for speed ([aa50048](https://github.com/vantreeseba/jsrunnable/commit/aa50048))
+* Create a workflow ([ee3836e](https://github.com/vantreeseba/jsrunnable/commit/ee3836e))
 * Fix test for window on node ([0f78255](https://github.com/vantreeseba/jsrunnable/commit/0f78255))
+* Update main.workflow ([d737756](https://github.com/vantreeseba/jsrunnable/commit/d737756))
 
 
 
