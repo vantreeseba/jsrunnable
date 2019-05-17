@@ -1,3 +1,10 @@
+## <small>0.2.3 (2019-05-17)</small>
+
+* Add new promise based tests for speed ([aa50048](https://github.com/vantreeseba/jsrunnable/commit/aa50048))
+* Fix test for window on node ([0f78255](https://github.com/vantreeseba/jsrunnable/commit/0f78255))
+
+
+
 ## <small>0.2.2 (2018-07-27)</small>
 
 * 0.2.2 ([b179ac0](https://github.com/vantreeseba/jsrunnable/commit/b179ac0))
