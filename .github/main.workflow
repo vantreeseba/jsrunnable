@@ -5,7 +5,6 @@ workflow "NPM Publish" {
 
 # Filter for a new tag
 action "Tag" {
-  needs = "Test"
   uses = "actions/bin/filter@master"
   args = "tag"
 }
