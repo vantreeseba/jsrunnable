@@ -1,5 +1,13 @@
+## 0.4.0 (2019-05-20)
+
+* Make mocha exit once tests run ([90751d6](https://github.com/vantreeseba/jsrunnable/commit/90751d6))
+* Make work for node (at least with --experimental-worker flag) ([acb4662](https://github.com/vantreeseba/jsrunnable/commit/acb4662))
+
+
+
 ## 0.3.0 (2019-05-17)
 
+* 0.3.0 ([07556b8](https://github.com/vantreeseba/jsrunnable/commit/07556b8))
 
 
 
