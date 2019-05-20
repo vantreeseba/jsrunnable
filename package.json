@@ -24,7 +24,7 @@
   },
   "scripts": {
     "watch": "npm-watch test",
-    "test": "NODE_OPTIONS=--experimental-worker mocha -u exports",
+    "test": "NODE_OPTIONS=--experimental-worker mocha -u exports --exit",
     "test-broke": "NODE_OPTIONS=--experimental-worker nyc -r text mocha -u exports",
     "build-readme": "jsdoc2md -t README.hbs -f *.js > README.md",
     "build-changelog": "conventional-changelog -i CHANGELOG.md -s -r 0",
