@@ -41,6 +41,8 @@ const withInternalPromise = runner.add(() => {
 //   console.log('interval', res);
 // }), 2000);
 
+const output = document.getElementById('output');
+
 const raf = async (funcs) => {
   let count = 0;
   let time = [];
@@ -54,11 +56,16 @@ const raf = async (funcs) => {
 
     console.log('took: ', t2 - t1);
 
+    const div = output.appendChild(document.createElement('div'));
+    div.innerHTML = t2-t1;
+
     count++;
 
-    if (count > 100) {
+    if (count > 10) {
       const ms = time.reduce((acc, cur) => acc += cur, 0) / time.length;
       console.log('on avg, took: ', ms);
+      const avg = output.appendChild(document.createElement('div'));
+      avg.innerHTML = `on avg, took: ${ms}`;
       return;
     }
 
