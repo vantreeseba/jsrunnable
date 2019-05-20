@@ -1,0 +1,21 @@
+{
+  "nyc": {
+    "cache": true,
+    "instrument": false,
+    "sourceMap": false,
+    "exclude": [
+      "packages/*/test.js",
+      "packages/app/server.js",
+      "webpack.config.js"
+    ],
+    "include": [
+      "packages/*/src/**/*.js",
+      "packages/*/*.js"
+    ],
+    "reporter": [
+      "html",
+      "lcov",
+      "text"
+    ]
+  }
+}

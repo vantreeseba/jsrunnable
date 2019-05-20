@@ -2,6 +2,22 @@
   * worker
   */
 function worker() {
+  const isBrowser = typeof window !== 'undefined';
+  let postMessage;
+  if (!isBrowser) {
+    try {
+      const threads = require('worker_threads');
+      parentPort = threads.parentPort;
+      postMessage = parentPort.postMessage.bind(parentPort);
+      // const {
+      // Worker, isMainThread, parentPort, workerData
+      // } = require('worker_threads');
+    } catch (ex) {
+      throw new Error('You must have node v12 to use workers');
+    }
+  } else {
+    postMessage = window.postMessage;
+  }
   const funcMap = new Map();
 
   /**
@@ -56,13 +72,20 @@ function worker() {
     }
   };
 
-  onmessage = (ev) => {
+  const handler = (ev) => {
     const message = ev.data;
 
     message.type === 'compile' ? compile(message)
       : message.type === 'call' ? call(message)
-      : 0;
+        : 0;
+
   };
+
+  if (parentPort) {
+    parentPort.on('message', handler);
+  } else {
+    onmessage = handler;
+  }
 }
 
 module.exports = worker;

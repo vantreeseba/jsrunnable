@@ -1,3 +1,15 @@
+const isBrowser = typeof window !== 'undefined';
+if (!isBrowser) {
+  try {
+    const threads = require('worker_threads');
+    Worker = threads.Worker;
+  // const {
+    // Worker, isMainThread, parentPort, workerData
+  // } = require('worker_threads');
+  } catch (ex) {
+    throw new Error('You must have node v12 to use workers');
+  }
+}
 /**
  * Utilities for jsrunnable
  */
@@ -13,8 +25,8 @@ class Utils {
     let stringFunc = func.toString();
     const arrowIndex = stringFunc.indexOf('=>');
     const noArgParens = stringFunc.indexOf('(') > arrowIndex || stringFunc.indexOf('(') === -1;
-    if(!stringFunc.startsWith('function')){
-      if(noArgParens) {
+    if (!stringFunc.startsWith('function')) {
+      if (noArgParens) {
         let args = stringFunc.substring(0, arrowIndex).trim();
         let body = stringFunc.substring(arrowIndex, stringFunc.length);
         stringFunc = '(' + args + ') ' + body;
@@ -35,15 +47,15 @@ class Utils {
     const funcString = Utils.funcToString(workerFunc);
     const funcWrapped = '(' + funcString + ')()';
     let worker;
-    if(window) {
+    if (isBrowser) {
       var blob = new Blob([funcWrapped]);
       var uri = URL.createObjectURL(blob, {type: 'text/javascript'});
       worker = new Worker(uri);
     } else {
-      if(!Worker) {
-        throw 'You need node 10.x to use workers';
+      if (typeof Worker == 'undefined') {
+        throw new Error('You need node 12.x to use workers or pass --experimental-workers');
       }
-      worker = new Worker(funcWrapped, {eval: true});
+      worker = new Worker(funcString, {eval: true});
     }
 
     return worker;
