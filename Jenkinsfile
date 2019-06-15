@@ -1,12 +1,12 @@
 pipeline {
   agent {
-    docker {
-      image 'node:12-alpine'
+    node {
+      label 'Linux'
     }
 
   }
   stages {
-    stage('') {
+    stage('error') {
       steps {
         sh 'node -v'
       }
